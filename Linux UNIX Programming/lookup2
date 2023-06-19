@@ -1,0 +1,48 @@
+#!/bin/bash
+#        Student Name: Dony Pierre
+#	Date: 04-30-2021 
+#        Course: Linux - Unix Programming I
+#        Week: 15 
+#        Assignment: Create a script called lookup to display datafile in sorted order 
+
+# Prompting user to add and entry to the datafile
+echo
+echo "Prompting user to add entry "
+echo
+
+while true; do
+read -p "Would you like to add an entry to the datafile: " yn
+case $yn in
+[Yy]* ) break;;
+[Nn]* ) exit;;
+* ) echo "Please select yes or no.";;
+esac
+done
+ 
+echo "Please enter the person first and last name: "
+read Firstname Lastname
+
+echo "Please enter the phone number: "
+read phone
+# To remove unwanted character so that only digits will be accepted
+phone = $(echo "$phone" | sed 's/[^0-9]*//g')
+phone = $(echo "${phone:0:3} - ${phone:3:3}-${phone:6:4}")
+
+echo "Please enter the address: "
+read address
+
+echo "Please enter the birthday (mm/dd/yyyy): "
+read birthday
+
+echo "Please enter the salary" 
+read salary
+
+# To remove unwanted character so that only digits will be accepted
+salary=$(echo "$salary" | sed 's/[^0-9]*//g')
+#append user input to the datafile
+#echo "$Firstname $Lastname:$address:$birthday:$salary" >> datafile.txt 
+
+echo "$Firstname $Lastname:$phone:$address:$birthday:$salary" >> datafile.txt
+printf "$Firstname $Lastname has been added to the datafile." 
+echo
+echo

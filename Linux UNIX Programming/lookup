@@ -1,0 +1,168 @@
+#!/bin/bash
+#        Student Name: Dony Pierre
+#	Date: 04-30-2021 
+#        Course: Linux - Unix Programming I
+#        Week: 15 
+#        Assignment: Create a script called lookup to display datafile in sorted order 
+
+#preparing condition to exit script
+
+#checking for the file
+#if [ ! -e datafile ]
+#if [ ! -w datafile ]
+#then 
+#echo "file not found"
+#printf "datafile was not found, check user permission "
+#exit 1
+#fi
+#echo
+
+# b. Sort datafile by last names in order
+echo "The contact from datafile sorted by last name"
+
+# sortting codes
+echo
+sort -k 2 datafile.txt 
+echo 
+# C show the user the contents of the datafile
+echo "Below is the content of the file"
+cat datafile.txt
+echo
+
+entry=$(cat datafile.txt | wc -l)
+printf "The number of entries in the datafile are: $entry"
+echo
+
+# Prompting user to add and entry to the datafile
+while true; do
+read -p "Would you like to add an entry to the datafile: " yn
+case $yn in
+[Yy]* ) break;;
+[Nn]* ) exit;;
+* ) echo "Please select yes or no.";;
+esac
+done
+
+#Setting case for the option
+case $REPLY in
+Entrymenu
+echo "Please select an option from the menu: "
+read option
+case $option in
+1) add;;
+2) delete;;
+3) view;;
+4) exit 1;;
+*) printf "Invalid Selection ";;
+4) exit 0;;
+*) printf "Please ty again. ";;
+esac
+done
+done
+
+#adding menu to the lookup scrip
+function Entrymenu()
+{
+printf "Please select an option from the Menu"
+echo "[1] Add entry"
+echo "[2] Delete entry"
+echo "[3] View entry"
+echo "[4] Exit"
+}
+
+#The menu will display the options and prompt user for a selection
+while true; do
+PS3= "Select from Menu"
+select option in \
+'Add entry' \
+'Delete entry' \
+'View entry' \
+'Exit'
+do
+
+#adding function to the lookup scrip
+function add()
+{
+echo "Please enter the person first and last name: "
+read Firstname Lastname
+if grep -iq "$Firstname $Lastname" datafile; then
+printf "$Firstname $Lastname already exist in the datafile. "
+return 1;
+fi
+
+echo "Please enter the phone number: "
+read phone
+# To remove unwanted character so that only digits will be accepted
+phone = $(echo "$phone" | sed 's/[^0-9]*//g')
+phone = $(echo "${phone:0:3} - ${phone:3:3}-${phone:6:4}")
+
+echo "Please enter the address: "
+read address
+
+echo "Please enter the birthday (mm/dd/yyyy): "
+read birthday
+
+echo "Please enter the salary" 
+read salary
+
+# To remove unwanted character so that only digits will be accepted
+salary=$(echo "$salary" | sed 's/[^0-9]*//g')
+#append user input to the datafile
+#echo "$Firstname $Lastname:$address:$birthday:$salary" >> datafile.txt 
+
+echo "$Firstname $Lastname:$phone:$address:$birthday:$salary" >> datafile.txt
+printf "$Firstname $Lastname has been added to the datafile." 
+grep -inF"$Firstname $Lastname" datafile.txt
+echo
+}
+
+#setting up the delete function
+function delete()
+{
+echo "Enter the first and last name for the entry you want to delete" 
+read Firstname Lastname 
+if grep -iq "$Firstname $Lastname" datafile; then
+sed -i "/$Firstname $Lastname/d" datafile.txt
+printf "Firstname $Lastname has been removed from the datafile "
+else
+printf "$Firstname $Lastname was not found"
+printf "Please try again"
+fi
+echo
+}
+
+#setting up the view function
+function view()
+{
+#Sorting the content of the datafile
+echo "Sorting the contact of the datafile by last name"
+sort -k 2 datafile.txt
+
+#prompt user for a name to view
+echo "Please enter the first and last name you want to view: "
+read Firstname Lastname
+if grep -iq "$Firstname $Lastname" datafile.txt; then
+grep -inF "$Firstname $Lastname" datafile.txt
+else
+printf "$Firstname $Lastname was not found."
+printf "Please try again"
+fi
+}
+
+#setting up veriables for the above entries and options
+# Prompting user to add and entry to the datafile
+while true; do
+read -p "Would you like to add an entry to the datafile: " yn
+case $yn in
+[Yy]* ) break;;
+[Nn]* ) exit;;
+* ) echo "Please select yes or no.";;
+esac
+done
+
+#sorting datafile to show the data that was added
+echo "$Firstname $Lastname:$phone:$address:$birthday:$salary" >> datafile.txt
+sort -k 2 datafile
+
+
+

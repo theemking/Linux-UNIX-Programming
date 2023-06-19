@@ -1,0 +1,30 @@
+#!/bin/bash
+
+<< MULTIPLE-COMMENT
+        Student Name: Dony Pierre
+        Date: April 17, 2021 
+	Course: Linux / Unix Programming I
+        Week: 12 / 13
+        Assignment: Menu 
+MULTIPLE-COMMENT
+
+#The purpossed of this program is to display a food menu
+
+while true
+do
+PS3="Please make a selection: "
+select choice in \
+'Steak and Potatoes' \
+'Fish and Chip' \
+'Soup and Salad'
+
+#output for the selections
+do case $REPLY in
+"1") printf 'Stick to your ribs. \nWatch your cholesterol. \nEnjoy your meal.\n';;
+"2") printf 'British are coming!\nEnjoy your meal.\n';;
+"3") printf 'Health foods...\nDieting is so boring.\nEnjoy your meal.\n';;
+*) printf 'invalid selection\n\n';;
+esac
+exit 0
+done
+done 

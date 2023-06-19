@@ -1,0 +1,21 @@
+#!/bin/bash
+<< MULTIPLE-COMMENT                                                             
+        Student Name: Dony Pierre                                               
+        File Name: nosy                                                         
+        Course: Linux / Unix Programming 1                                      
+        Week 11                                                                 
+        Assignment: Getting User Input & Conditional Statement                  
+MULTIPLE-COMMENT  
+
+# A take a command-line argument
+if[$# -eq 0]; then
+echo "A user name is required"
+exit 1
+
+fi
+# Checking to see if the user is in the /etc/password file
+if id "$1" >/etc/password 2>&1; then
+echo "Found $1 in the /etc/password file"
+else
+echo "No such user on our system"
+fi 

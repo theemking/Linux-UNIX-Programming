@@ -1,0 +1,40 @@
+#!/bin/bash
+
+<< MULTIPLE-COMMENT
+        Student Name: Dony Pierre
+        Course: Linux / Unix Programming I
+        Week: 12 / 13
+        Assignment: Add Functions 
+MULTIPLE-COMMENT
+
+#Writing a script named add that takes two command line arguments and displays as output their sum. 
+
+add()
+{
+num1=$1
+num2=$2
+echo -e "The Numbers entered are: $num1 and $num2"
+echo "The sum of $1 and $2 is `expr $num1 + $num2` "
+}
+echo "Enter the first number"
+read numbOne	
+echo "Enter the second number"
+read numbTwo 
+
+add $numbOne $numbTwo 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

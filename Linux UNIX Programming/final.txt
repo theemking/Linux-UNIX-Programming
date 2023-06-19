@@ -1,0 +1,188 @@
+#!/bin/bash
+
+# Create a sort function that sorts on last name
+sortLast(){
+# Accept file input
+filename=$1
+
+# define temp file name
+tfname=temp.txt
+
+# Reverse position of first and last name
+sed -E -i '
+s/([[:upper:]]{1}[[:lower:]]+) ([[:upper:]]{1}[[:lower:]]+):/\2 \1:/
+' $filename
+
+# Sort on last names and write to temp file
+cat $filename | sort > $tfname
+
+# Reverse back last and first names
+sed -E -i '
+s/([[:upper:]]{1}[[:lower:]]+) ([[:upper:]]{1}[[:lower:]]+):/\2 \1:/
+' $tfname
+
+# Use temp file to overwrite back to original.
+# temp disable aliases of cp using \
+\cp -f $tfname $filename
+
+# remove temp file
+rm $tfname
+
+} # end sortLast()
+
+# Function to add an entry to the data file
+add(){
+# Ask user for name (first last)
+read -p "Name (first last):"
+name=$REPLY
+
+# Make sure name doesn't exist
+found=$(grep -c "$name" $1)
+
+if ! [ $found = 0 ]
+then
+echo "$name already exists in $1"
+return
+fi
+
+# Ask user for phone number (xxx-xxx-xxxx)
+read -p "Phone number (xxx-xxx-xxxx):"
+tel=$REPLY
+
+# Ask user for address (street, city, state zip)
+read -p "Address (street, city, state zip):"
+addr=$REPLY
+
+# Ask user for date of birth (m/d/yy)
+read -p "Date of birth (m/d/yy):"
+dob=$REPLY
+
+# Ask user for salary
+read -p "Salary (xxxxx):"
+sal=$REPLY
+
+# Concatenate input with colon
+line="$name:$tel:$addr:$dob:$sal"
+
+# Append entry to end of file
+sed -E -i '
+$a\
+'"${line}"'' $1
+
+# Sort file
+sortLast $1
+
+# Find entry and get line number
+lno=$(grep -n "$line" $1 | cut -d: -f 1)
+
+# Print message. Then line number followed by entry
+echo "Entry added successfuly!"
+echo "Line: $lno Entry: $line"
+
+} # End add function
+
+# Delete function
+delete(){
+# Ask user for name (first last)
+read -p "Enter name to delete (first last):"
+name=$REPLY
+
+# find matching lines and delete
+found=$(grep -c "$name" $1)
+
+if [ $found = 0 ]
+then
+echo "$name not found in $1"
+else
+sed -i '/'"${name}"'/d' $1
+echo "$name found and deleted from $1"
+fi
+}
+
+view(){
+# Ask user for name (first last)
+read -p "Enter name to view (first last):"
+name=$REPLY
+
+# find matching lines
+found=$(grep -c "$name" $1)
+
+if [ $found = 0 ]
+then
+echo "$name not found in $1"
+else
+grep "$name" $1
+fi
+}
+
+# check file exists and correct permissions
+if ! [ -w "$1" ]
+then
+echo "File $1 does not exist or is not writable"
+echo "Exiting script..."
+exit
+fi
+
+# call sort function
+sortLast $1
+
+# Print message
+echo 'The file contains the below contents:'
+
+# Print sorted contents
+# print file contents
+sed -n '
+/.*/p
+' $1
+
+# Print message and number of entries
+echo "There are $(cat $1 | wc -l) entries in $1"
+
+echo "What would you like to do?"
+# Create a menu of options
+PS3="->:"
+op1="Add Entry"
+op2="Delete Entry"
+op3="View Entry"
+op4="Exit"
+
+errflag=0
+select sel in "$op1" "$op2" "$op3" "$op4"
+do
+# User response is captured in $REPLY var
+# Print message based on response
+case $REPLY in
+1 ) add $1
+;;
+2 ) delete $1
+;;
+3 ) view $1
+;;
+4 ) break
+;;
+* ) echo 'Invalid entry. Please try again.'
+echo "1) $op1"
+echo "2) $op2"
+echo "3) $op3"
+echo "4) $op4"
+errflag=1
+;;
+esac
+
+# Repeat menu if valid entry?
+if [ $errflag = 0 ]
+then
+read -p "Would you like to see the menu again? (Yes or y to continue):"
+if [ "$REPLY" = "Yes" ] || [ "$REPLY" = "y" ]
+then
+echo "1) $op1"
+echo "2) $op2"
+echo "3) $op3"
+echo "4) $op4"
+else
+echo "Exiting..."
+break
+fi
+fi
+errflag=0
+done

@@ -1,0 +1,28 @@
+#!/bin/bash
+
+<< MULTIPLE-COMMENT
+	Student Name: Dony Pierre
+	Course: Linux / Unix Programming I
+	Week: 12 / 13
+	Assignment: Mchecker
+MULTIPLE-COMMENT
+
+#Write a program called mchecker to check for new mail and write a message to the screen
+# if new mail has arrived
+echo "Checking for Mail"
+
+# initial mail size check, setting variable to byte count of mail file size
+MAILSIZE=$(wc -c /var/spool/mail/$USER  | awk '{print $1}')
+
+while true ; do
+      #second variable based on a new byte count of the mail file size
+      NEWMAILSIZE=$(wc -c /var/spool/mail/$USER  | awk '{print $1}')
+      if [[ $MAILSIZE -lt $NEWMAILSIZE ]]
+        then
+            echo "$USER, you have new mail"
+            exit
+      else
+        sleep 30
+      fi
+done 
+

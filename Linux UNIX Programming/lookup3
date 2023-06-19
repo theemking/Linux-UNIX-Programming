@@ -1,0 +1,25 @@
+#!/bin/bash
+#        Student Name: Dony Pierre
+#	Date: 04-30-2021 
+#        Course: Linux - Unix Programming I
+#        Week: 15 
+#        Assignment: Create a script called lookup to display datafile in sorted order 
+
+# b. Sort datafile by last names in order
+echo
+echo "The contact from datafile sorted by last name"
+
+echo
+sort -k 2 datafile.txt 
+echo 
+
+# C show the user the contents of the datafile
+echo "Below is the content of the file"
+cat datafile.txt
+echo
+
+entry=$(cat datafile.txt | wc -l)
+printf "The number of entries in the datafile are: $entry"
+echo
+echo
+ 

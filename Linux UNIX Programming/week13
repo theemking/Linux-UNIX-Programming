@@ -1,0 +1,70 @@
+Script started on 2021-04-19 03:59:58-04:00 [TERM="xterm-256color" TTY="/dev/pts/2" COLUMNS="98" LINES="56"]
+]0;root@dpierre-virtual-machine: /home/Linux Programming I/week13/week13Assignmentroot@dpierre-virtual-machine:/home/Linux Programming I/week13/week13Assignment# vi add
+[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;56r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[56;1H"add" 40 lines, 546 characters[1;1H#!/bin/bash
+
+<< MULTIPLE-COMMENT[4;9HStudent Name: Dony Pierre[5;9HCourse: Linux / Unix Programming I[6;9HWeek: 12 / 13[7;9HAssignment: Add Functions
+MULTIPLE-COMMENT
+
+#Writing a script named add that takes two command line arguments and displays as output their summ[11;1H.
+
+add()
+{
+num1=$1
+num2=$2
+echo -e "The Numbers entered are: $num1 and $num2"
+echo "The sum of $1 and $2 is `expr $num1 + $num2` "
+}
+echo "Enter the first number"
+read numbOne
+echo "Enter the second number"
+read numbTwo
+
+add $numbOne $numbTwo[42;1H[94m~                                                                                                 [43;1H~                                                                                                 [44;1H~                                                                                                 [45;1H~                                                                                                 [46;1H~                                                                                                 [47;1H~                                                                                                 [48;1H~                                                                                                 [49;1H~                                                                                                 [50;1H~                                                                                                 [51;1H~                                                                                                 [52;1H~                                                                                                 [53;1H~                                                                                                 [54;1H~                                                                                                 [55;1H~                                                                                                 [1;1H[?25h[?25l[m[56;1H[K[56;1H:[?2004h[?25hwq[?25l[?2004l"add" 40 lines, 546 characters written
+[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t]0;root@dpierre-virtual-machine: /home/Linux Programming I/week13/week13Assignmentroot@dpierre-virtual-machine:/home/Linux Programming I/week13/week13Assignment# vi menu
+[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;56r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[56;1H"menu" 30 lines, 699 characters[1;1H#!/bin/bash
+
+<< MULTIPLE-COMMENT[4;9HStudent Name: Dony Pierre[5;9HDate: April 17, 2021[6;9HCourse: Linux / Unix Programming I[7;9HWeek: 12 / 13[8;9HAssignment: Menu
+MULTIPLE-COMMENT
+
+#The purpossed of this program is to display a food menu
+
+while true
+do
+PS3="Please make a selection: "
+select choice in \
+'Steak and Potatoes' \
+'Fish and Chip' \
+'Soup and Salad'
+
+#output for the selections
+do case $REPLY in
+"1") printf 'Stick to your ribs. \nWatch your cholesterol. \nEnjoy your meal.\n';;
+"2") printf 'British are coming!\nEnjoy your meal.\n';;
+"3") printf 'Health foods...\nDieting is so boring.\nEnjoy your meal.\n';;
+*) printf 'invalid selection\n\n';;
+esac
+exit 0
+done
+done
+[94m~                                                                                                 [32;1H~                                                                                                 [33;1H~                                                                                                 [34;1H~                                                                                                 [35;1H~                                                                                                 [36;1H~                                                                                                 [37;1H~                                                                                                 [38;1H~                                                                                                 [39;1H~                                                                                                 [40;1H~                                                                                                 [41;1H~                                                                                                 [42;1H~                                                                                                 [43;1H~                                                                                                 [44;1H~                                                                                                 [45;1H~                                                                                                 [46;1H~                                                                                                 [47;1H~                                                                                                 [48;1H~                                                                                                 [49;1H~                                                                                                 [50;1H~                                                                                                 [51;1H~                                                                                                 [52;1H~                                                                                                 [53;1H~                                                                                                 [54;1H~                                                                                                 [55;1H~                                                                                                 [1;1H[?25h[?25l[m[56;1H[K[56;1H:[?2004h[?25hwq[?25l[?2004l"menu" 30 lines, 699 characters written
+[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t]0;root@dpierre-virtual-machine: /home/Linux Programming I/week13/week13Assignmentroot@dpierre-virtual-machine:/home/Linux Programming I/week13/week13Assignment# w[Kvi mch[Khde[K[Kec[Kcker
+[?1049h[22;0;0t[>4;2m[?1h=[?2004h[1;56r[?12h[?12l[27m[23m[29m[m[H[2J[?25l[56;1H"mchecker" 28 lines, 745 characters[1;1H#!/bin/bash
+
+<< MULTIPLE-COMMENT[4;9HStudent Name: Dony Pierre[5;9HCourse: Linux / Unix Programming I[6;9HWeek: 12 / 13[7;9HAssignment: Mchecker
+MULTIPLE-COMMENT
+
+#Write a program called mchecker to check for new mail and write a message to the screen
+# if new mail has arrived
+echo "Checking for Mail"
+
+# initial mail size check, setting variable to byte count of mail file size
+MAILSIZE=$(wc -c /var/spool/mail/$USER  | awk '{print $1}')
+
+while true ; do[18;7H#second variable based on a new byte count of the mail file size[19;7HNEWMAILSIZE=$(wc -c /var/spool/mail/$USER  | awk '{print $1}')[20;7Hif [[ $MAILSIZE -lt $NEWMAILSIZE ]][21;9Hthen[22;13Hecho "$USER, you have new mail"[23;13Hexit[24;7Helse[25;9Hsleep 30[26;7Hfi
+done
+
+[94m~                                                                                                 [30;1H~                                                                                                 [31;1H~                                                                                                 [32;1H~                                                                                                 [33;1H~                                                                                                 [34;1H~                                                                                                 [35;1H~                                                                                                 [36;1H~                                                                                                 [37;1H~                                                                                                 [38;1H~                                                                                                 [39;1H~                                                                                                 [40;1H~                                                                                                 [41;1H~                                                                                                 [42;1H~                                                                                                 [43;1H~                                                                                                 [44;1H~                                                                                                 [45;1H~                                                                                                 [46;1H~                                                                                                 [47;1H~                                                                                                 [48;1H~                                                                                                 [49;1H~                                                                                                 [50;1H~                                                                                                 [51;1H~                                                                                                 [52;1H~                                                                                                 [53;1H~                                                                                                 [54;1H~                                                                                                 [55;1H~                                                                                                 [1;1H[?25h[?25l[m[56;1H[K[56;1H:[?2004h[?25hwq[?25l[?2004l"mchecker" 28 lines, 745 characters written
+[?2004l[?1l>[?25h[>4;m[?1049l[23;0;0t]0;root@dpierre-virtual-machine: /home/Linux Programming I/week13/week13Assignmentroot@dpierre-virtual-machine:/home/Linux Programming I/week13/week13Assignment# exit
+exit
+
+Script done on 2021-04-19 04:02:12-04:00 [COMMAND_EXIT_CODE="0"]

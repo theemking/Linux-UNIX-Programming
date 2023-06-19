@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+<< MULTIPLE-COMMENT
+	Name: Dony Pierre
+	Assignment: Text1
+	Course: SDEV-385-81: Operating Systems Architecture
+	Week: 1
+MULTIPLE-COMMENT
+
+echo " This is a test of concatenation."
+

@@ -1,0 +1,50 @@
+#!/usr/bin/env bash
+
+<< MULTIPLE-COMMENT
+	Student Name: Dony Pierre
+	File Name: nosy
+	Course: Linux / Unix Programming 1
+	Week 11
+	Assignment: Getting User Input & Conditional Statement
+MULTIPLE-COMMENT
+
+# A asking user for name
+echo Enter your first name
+read name
+
+echo Enter your last name
+read lname
+
+echo Enter your middle name
+read mname
+
+# B greeting the user
+echo Hello $name
+
+# C asking user for login name
+echo Provide your login name
+read login
+
+x=$(getent password $login | cut -d ':' -f 3)
+echo $x
+
+# D telling user about directory
+echo your home directory is:
+h=$(getent password $login |cut -d ':' -f 6)
+echo $h
+echo
+
+#E show the user's processors
+echo All processors $login is running
+
+echo $(ps -u $login)
+
+#G telling user the day of the week
+dow=$(date +'%A')
+now=$(date +"%r")
+
+echo The day of the week is $dow  
+
+echo the current time is: $now 
+
+
